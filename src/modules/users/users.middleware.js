@@ -41,9 +41,17 @@ export const protect = catchAsync(async (req, res, next) => {
             new AppError("The owner of this token in not longer available", 401)
         );
     }
-
     //
-
     req.sessionUser = user;
+    next();
+});
+
+export const protectAccountOwner = catchAsync(async (req, res, next) => {
+    const { user, sessionUser } = req;
+
+    if (user.id !== sessionUser.id) {
+        return next(new AppError("You are not the owner of this account!", 401));
+    }
+
     next();
 });

@@ -35,10 +35,8 @@ export const validateRolUser = catchAsync(async (req, res, next) => {
     const { sessionUser } = req
     
     if (sessionUser.role === 'client') {
-        return next(new AppError("You do not have the necessary permissions to access this page", 401))
+        return next(new AppError("You do not have the necessary permissions to access this page", 403))
     }
 
     next()
 })
-
-
